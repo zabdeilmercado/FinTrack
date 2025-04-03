@@ -8,21 +8,26 @@ import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 import { aliases, mdi } from 'vuetify/iconsets/mdi'
+import '@mdi/font/css/materialdesignicons.css'
 
-// Routes
-
-import LoginView from './views/LoginView.vue'
-
+// Create router
 const routes = [
   { path: '/', redirect: '/login' },
-  { path: '/login', component: LoginView },
+  { path: '/login', component: () => import('./views/LoginView.vue') },
+  { path: '/register', component: () => import('./views/RegisterView.vue') },
+  { 
+    path: '/dashboard', 
+    component: () => import('./views/DashboardView.vue'),
+    // You can add authentication guard here
+  }
 ]
 
 const router = createRouter({
   history: createWebHistory(),
-  routes,
+  routes
 })
 
+// Create Vuetify instance with light and dark theme
 const vuetify = createVuetify({
   components,
   directives,
@@ -31,38 +36,41 @@ const vuetify = createVuetify({
     aliases,
     sets: {
       mdi,
-    },
+    }
   },
   theme: {
     defaultTheme: 'light',
     themes: {
       light: {
+        dark: false,
         colors: {
-          primary: '#1976D2',
-          secondary: '#424242',
-          accent: '#82B1FF',
-          error: '#FF5252',
-          info: '#2196F3',
-          success: '#4CAF50',
-          warning: '#FFC107',
-        },
+          primary: '#7C3AED', // Purple
+          secondary: '#8B5CF6',
+          background: '#F9FAFB',
+          surface: '#FFFFFF',
+          error: '#EF4444',
+          success: '#10B981',
+          warning: '#F59E0B',
+        }
       },
       dark: {
+        dark: true,
         colors: {
-          primary: '#2196F3',
-          secondary: '#424242',
-          accent: '#FF4081',
-          error: '#FF5252',
-          info: '#2196F3',
-          success: '#4CAF50',
-          warning: '#FFC107',
-        },
-      },
-    },
-  },
+          primary: '#8B5CF6', // Lighter purple for dark mode
+          secondary: '#A78BFA',
+          background: '#111827',
+          surface: '#1F2937',
+          error: '#F87171',
+          success: '#34D399',
+          warning: '#FBBF24',
+        }
+      }
+    }
+  }
 })
 
-const app = createApp(App)
-app.use(router)
-app.use(vuetify)
-app.mount('#app')
+// Create and mount the app
+createApp(App)
+  .use(router)
+  .use(vuetify)
+  .mount('#app')

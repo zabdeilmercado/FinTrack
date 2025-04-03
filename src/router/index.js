@@ -1,21 +1,24 @@
-import { createRouter, createWebHistory } from 'vue-router';
-import LoginView from '../views/LoginView.vue';
+import { createRouter, createWebHistory } from 'vue-router'
+import LoginView from '@/views/auth/LoginView.vue'
+import RegisterView from '@/views/auth/RegisterView.vue'
 
 const routes = [
   {
     path: '/',
-    redirect: '/login'
+    name: 'login',
+    component: LoginView,
   },
   {
-    path: '/login',
-    name: 'login',
-    component: LoginView
-  },
-];
+    path: '/',
+    name: 'register',
+    component: RegisterView
+  }
+  
+]
 
 const router = createRouter({
   history: createWebHistory(),
-  routes
-});
+  routes,
+})
 
-export default router;
+export default router
