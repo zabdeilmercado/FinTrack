@@ -13,18 +13,13 @@ import '@mdi/font/css/materialdesignicons.css'
 // Create router
 const routes = [
   { path: '/', redirect: '/login' },
-  { path: '/login', component: () => import('./views/LoginView.vue') },
-  { path: '/register', component: () => import('./views/RegisterView.vue') },
-  { 
-    path: '/dashboard', 
-    component: () => import('./views/DashboardView.vue'),
-    // You can add authentication guard here
-  }
+  { path: '/login', component: () => import('./views/auth/LoginView.vue') },
+  { path: '/register', component: () => import('./views/auth/RegisterView.vue') },
 ]
 
 const router = createRouter({
   history: createWebHistory(),
-  routes
+  routes,
 })
 
 // Create Vuetify instance with light and dark theme
@@ -36,7 +31,7 @@ const vuetify = createVuetify({
     aliases,
     sets: {
       mdi,
-    }
+    },
   },
   theme: {
     defaultTheme: 'light',
@@ -51,7 +46,7 @@ const vuetify = createVuetify({
           error: '#EF4444',
           success: '#10B981',
           warning: '#F59E0B',
-        }
+        },
       },
       dark: {
         dark: true,
@@ -63,14 +58,11 @@ const vuetify = createVuetify({
           error: '#F87171',
           success: '#34D399',
           warning: '#FBBF24',
-        }
-      }
-    }
-  }
+        },
+      },
+    },
+  },
 })
 
 // Create and mount the app
-createApp(App)
-  .use(router)
-  .use(vuetify)
-  .mount('#app')
+createApp(App).use(router).use(vuetify).mount('#app')
